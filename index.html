@@ -1,135 +1,230 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <!--
 	Strata by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
+  <head>
+    <title>Narusei Portfolio</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="assets/css/main.css" />
+  </head>
 
-<head>
-	<title>Narusei Portfolio</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="assets/css/main.css" />
-</head>
+  <body class="is-preload">
+    <!-- Header -->
+    <header id="header">
+      <div class="inner">
+        <a href="#" class="image avatar"
+          ><img src="images/avatar.jpg" alt=""
+        /></a>
+        <h1><strong>Narusei</strong></h1>
+        成尾一征<br />
+        バレーボールをやっています。<br />
+        Web(フロントとバックどっちも)<br />パソコンゲーム、スマホアプリの開発<br />に興味関心があり勉強しています。
+      </div>
+    </header>
 
-<body class="is-preload">
+    <!-- Main -->
+    <div id="main">
+      <!-- One -->
+      <section id="one">
+        <header class="major">
+          <h2>新しいものを作ってみたい</h2>
+        </header>
+        <p>
+          Webサービスの開発をしたく、<br />
+          フロントとバック共に積極的な学習をしていきたいと思っています。<br />
+          Vue.js、Python、Ruby on Railsを使ったWeb開発や、<br />
+          Unity、AndroidStudio、Xcodeを使ったゲームやアプリ開発に強い関心があります。<br />
+          加えて、機械学習の勉強を進めています<br />
+        </p>
+        <ul class="actions">
+          <li><a href="#" class="button">Learn More</a></li>
+        </ul>
+      </section>
 
-	<!-- Header -->
-	<header id="header">
-		<div class="inner">
-			<a href="#" class="image avatar"><img src="images/avatar.jpg" alt="" /></a>
-			<h1><strong>Narusei</strong></h1>成尾一征<br>
-			バレーボールをやっています。<br>
-			Web(フロントとバックどっちも)<br>パソコンゲーム、スマホアプリの開発<br>に興味関心があり勉強しています。
-		</div>
-	</header>
+      <!-- Two -->
+      <section id="two">
+        <h2>制作物</h2>
+        <div class="row">
+          <article class="col-6 col-12-xsmall work-item">
+            <a href="images/fulls/01.png" class="image fit thumb"
+              ><img src="images/thumbs/01.png" alt=""
+            /></a>
+            <h3>所属団体のホームページ</h3>
+            <p>所属している団体のホームページを作りました。</p>
+            <p>使用ツール：Vue.js,Bulma(CSSフレームワーク)</p>
+            <a
+              href="https://www.sg.dendai.ac.jp/s1t-volleyball/index.html"
+              target="_blank"
+              >作品はこちらから</a
+            >
+          </article>
+          <article class="col-6 col-12-xsmall work-item">
+            <a href="images/fulls/02.png" class="image fit thumb"
+              ><img src="images/thumbs/02.png" alt=""
+            /></a>
+            <h3>CueTube</h3>
+            <p>
+              兼部している団体の活動で利用するツールを作りました。
+              Googleフォームで送られた動画IDをキューに格納し、それに対応する動画を連続再生するというツールです。
+              説明書を読み、ダウンロードしてお使いください。
+            </p>
+            <p>使用ツール：GoogleAppsScript,YouTubeDataAPi,Vue.js</p>
+            <a
+              href="https://drive.google.com/open?id=1r24CtXBdOtDArVuwYiqB7-tOhDDbHP0o"
+              target="_blank"
+              >作品はこちらから</a
+            >
+          </article>
+          <article class="col-6 col-12-xsmall work-item">
+            <a href="images/fulls/10.png" class="image fit thumb"
+              ><img src="images/thumbs/10.png" alt=""
+            /></a>
+            <h3>Tatekae</h3>
+            <p>
+              個人制作物。インターン参加での経験の総復習として作りました。
+              コーティングにも気を使っているつもりです。
+              パーティやイベント事をする際に、
+              「ついでにあれ買っといて」といった"立て替え"が乱雑に生まれてしまうと思います。
+              これを把握するのが難しいと感じたので、立て替え費用をメモするだけで、
+              最終的に誰が誰にいくら払えばいいのかを自動計算してくれるツールを作りました。
+              現在プロトタイプですが、実際に使うこともできます。
+            </p>
+            <p>使用ツール：Vue.js, Firebase, Bulma(CSSフレームワーク)</p>
+            <a href="https://tatekae-9956a.web.app/" target="_blank"
+              >作品はこちらから</a
+            >
+          </article>
+          <article class="col-6 col-12-xsmall work-item">
+            <a href="images/fulls/11.jpg" class="image fit thumb"
+              ><img src="images/thumbs/11.jpg" alt=""
+            /></a>
+            <h3>Time Record Bot[開発中]</h3>
+            <p>
+              個人制作物。Twitter APIを使ってみたく簡単なBotを作ってみました。
+              study(start), now, endというキーワードをメンションするだけで、
+              時間計測開始, 現在の経過時間,
+              時間計測終了とその結果をリプライしてくれるBotです。
+              現在実装途中で、最終的にはWeb上で計測結果を可視化できるようにしたいです。
+              (ただお金の問題で実装が止まっています...悩ましい...)
+            </p>
+            <p>使用ツール：Node.js, Twitter API</p>
+          </article>
+          <article class="col-6 col-12-xsmall work-item">
+            <a href="images/fulls/12.png" class="image fit thumb"
+              ><img src="images/thumbs/12.png" alt=""
+            /></a>
+            <h3>Borobo</h3>
+            <p>
+              授業内課題。学内限定の物の貸し借り掲示板サービス。
+              特徴的な点は、掲示板(board)に要望を投稿できるのは、貸し手ではなく、借り手(borower)ということ。
+              借り手のための物の貸し借り掲示板サービス(Borower`s Board =
+              Borobo)というコンセプトです。
+              チーム内のリードとして尽力させていただき、優秀賞をいただきました。
+            </p>
+            <p>
+              使用ツール：Ruby on Rails, Vue.js, Nginx, VPS(Conoha), Swagger
+            </p>
+          </article>
+          <article class="col-6 col-12-xsmall work-item">
+            <a href="images/fulls/06.jpg" class="image fit thumb"
+              ><img src="images/thumbs/06.jpg" alt=""
+            /></a>
+            <h3>Syfon[開発停止中]</h3>
+            <p>
+              現在大学の学生団体に所属させて頂き、授業や大学生活に関する情報をより分かりやすく提供するWebアプリを作成しています。
+              ※現在メンバーの多忙に付きこちらのプロジェクトは一時中止となっています。
+            </p>
+            <p>使用ツール：Python, Cloud_firestore, Vue.js, TypeScript</p>
+          </article>
+          <article class="col-6 col-12-xsmall work-item">
+            <a href="images/fulls/08.jpg" class="image fit thumb"
+              ><img src="images/thumbs/08.jpg" alt=""
+            /></a>
+            <h3>Concentration Mining[開発中]</h3>
+            <p>
+              個人で開発しているスマホ向けのゲームです。採掘×神経衰弱をテーマにした片手間で出来るパズルゲームです。
+            </p>
+            <p>使用ツール：Unity</p>
+          </article>
+          <article class="col-6 col-12-xsmall work-item">
+            <a href="images/fulls/09.jpg" class="image fit thumb"
+              ><img src="images/thumbs/09.jpg" alt=""
+            /></a>
+            <h3>Cubreak</h3>
+            <p>
+              友達と開発しているゲームです。
+              刻一刻と変化するステージで相手を殴って押し出したら勝ちという
+              シンプルなゲーム性が魅力のゲームです。
+            </p>
+            <p>使用ツール：Unity, Socket.io, AWS(EC2)</p>
+          </article>
+          <article class="col-6 col-12-xsmall work-item">
+            <a href="images/fulls/07.png" class="image fit thumb"
+              ><img src="images/thumbs/07.png" alt=""
+            /></a>
+            <h3>Capture The Flug</h3>
+            <p>
+              授業内課題。チームで開発した対戦ゲームです。倉庫番ゲームの要素を盛り込み中央の旗をいち早く手にすることが目的です。
+              移動している障害物にぶつかると他プレイヤーを倒せるので、行動を阻害することができ、戦略性が生まれます。
+              タイトルがCubreakなのはCubreakを参考に作成したからです。
+            </p>
+            <p>使用ツール：Unity, Socket.io, AWS(EC2)</p>
+            <a href="https://github.com/it262/CTF" target="_blank"
+              >作品はこちらから</a
+            >
+          </article>
+          <article class="col-6 col-12-xsmall work-item">
+            <a href="images/fulls/03.png" class="image fit thumb"
+              ><img src="images/thumbs/03.png" alt=""
+            /></a>
+            <h3>Colorful.</h3>
+            <p>
+              授業内課題。見下ろし視点の対戦ゲームです。人生で初めてプログラムを組んで作成した作品です。
+            </p>
+            <p>使用ツール：Processing</p>
+          </article>
+          <article class="col-6 col-12-xsmall work-item">
+            <a href="images/fulls/04.png" class="image fit thumb"
+              ><img src="images/thumbs/04.png" alt=""
+            /></a>
+            <h3>Video Learning Support App</h3>
+            <p>
+              授業内課題。Youtubeの字幕から自然言語処理を用いて頻出単語を解析し、Qiitaの記事を推薦するアプリです。
+              精度が悪かったので動画タイトルの情報も利用しました。
+            </p>
+            <p>
+              使用ツール：<br />Python(Bottle
+              etc...),nltk,YouTubeDataApi,QiitaApi,Bulma
+            </p>
+            <a href="https://github.com/narusei/vls-app" target="_blank"
+              >作品はこちらから</a
+            >
+          </article>
+          <article class="col-6 col-12-xsmall work-item">
+            <a href="images/fulls/05.png" class="image fit thumb"
+              ><img src="images/thumbs/05.png" alt=""
+            /></a>
+            <h3>ご祝儀メモツール</h3>
+            <p>
+              授業内課題。直近に親戚の結婚式があり、記録ツールがあったら便利かなと思ったため。
+            </p>
+            <p>使用ツール：Java,PostgreSQL</p>
+          </article>
+        </div>
+        <ul class="actions">
+          <li><a href="#" class="button">Full Portfolio</a></li>
+        </ul>
+      </section>
 
-	<!-- Main -->
-	<div id="main">
-
-		<!-- One -->
-		<section id="one">
-			<header class="major">
-				<h2>新しいものを作ってみたい</h2>
-			</header>
-			<p>
-				Webサービスの開発をしたく、<br>
-				フロントとバック共に積極的な学習をしていきたいと思っています。<br>
-				Vue.js、Python、Ruby on Railsを使ったWeb開発や、<br>
-				Unity、AndroidStudio、Xcodeを使ったゲームやアプリ開発に強い関心があります。<br>
-			</p>
-			<ul class="actions">
-				<li><a href="#" class="button">Learn More</a></li>
-			</ul>
-		</section>
-
-		<!-- Two -->
-		<section id="two">
-			<h2>制作物</h2>
-			<div class="row">
-				<article class="col-6 col-12-xsmall work-item">
-					<a href="images/fulls/01.png" class="image fit thumb"><img src="images/thumbs/01.png" alt="" /></a>
-					<h3>所属団体のホームページ</h3>
-					<p>所属している団体のホームページを作りました。</p>
-					<p>使用ツール：Vue.js,Bulma</p>
-					<a href="https://www.sg.dendai.ac.jp/s1t-volleyball/index.html" target="_blank">作品はこちらから</a>
-				</article>
-				<article class="col-6 col-12-xsmall work-item">
-					<a href="images/fulls/02.png" class="image fit thumb"><img src="images/thumbs/02.png" alt="" /></a>
-					<h3>CueTube</h3>
-					<p>兼部している団体の活動で利用するツールを作りました。
-						Googleフォームで送られた動画IDをキューに格納し、それに対応する動画を連続再生するというツールです。
-						説明書を読み、ダウンロードしてお使いください。
-					</p>
-					<p>使用ツール：GoogleAppsScript,YouTubeDataAPi,Vue.js</p>
-					<a href="https://drive.google.com/open?id=1r24CtXBdOtDArVuwYiqB7-tOhDDbHP0o"
-						target="_blank">作品はこちらから</a>
-				</article>
-				<article class="col-6 col-12-xsmall work-item">
-					<a href="images/fulls/06.jpg" class="image fit thumb"><img src="images/thumbs/06.jpg" alt="" /></a>
-					<h3>Syfon[開発中]</h3>
-					<p>現在大学の学生団体に所属させて頂き、授業や大学生活に関する情報をより分かりやすく提供するWebアプリを作成しています。
-					</p>
-					<p>使用ツール：Python, Cloud_firestore, Vue.js, TypeScript</p>
-				</article>
-				<article class="col-6 col-12-xsmall work-item">
-					<a href="images/fulls/08.jpg" class="image fit thumb"><img src="images/thumbs/08.jpg" alt="" /></a>
-					<h3>Concentration Mining[開発中]</h3>
-					<p>
-						個人で開発しているスマホ向けのゲームです。採掘×神経衰弱をテーマにした片手間で出来るパズルゲームです。
-					</p>
-					<p>使用ツール：Unity</p>
-				</article>
-				<article class="col-6 col-12-xsmall work-item">
-					<a href="images/fulls/09.jpg" class="image fit thumb"><img src="images/thumbs/09.jpg" alt="" /></a>
-					<h3>Cubreak[開発中]</h3>
-					<p>
-						友達と開発しているゲームです。
-						刻一刻と変化するステージで相手を殴って押し出したら勝ちという
-						シンプルなゲーム性が魅力のゲームです。
-					</p>
-					<p>使用ツール：Unity, Socket.io, AWS(EC2)</p>
-				</article>
-				<article class="col-6 col-12-xsmall work-item">
-					<a href="images/fulls/07.png" class="image fit thumb"><img src="images/thumbs/07.png" alt="" /></a>
-					<h3>Capture The Flug</h3>
-					<p>
-						授業内課題。チームで開発した対戦ゲームです。倉庫番ゲームの要素を盛り込み中央の旗をいち早く手にすることが目的です。
-						移動している障害物にぶつかると他プレイヤーを倒せるので、行動を阻害することができ、戦略性が生まれます。
-						タイトルがCubreakなのはCubreakを参考に作成したからです。
-					</p>
-					<p>使用ツール：Unity, Socket.io, AWS(EC2)</p>
-					<a href="https://github.com/it262/CTF" target="_blank">作品はこちらから</a>
-				</article>
-				<article class="col-6 col-12-xsmall work-item">
-					<a href="images/fulls/03.png" class="image fit thumb"><img src="images/thumbs/03.png" alt="" /></a>
-					<h3>Colorful.</h3>
-					<p>授業内課題。見下ろし視点の対戦ゲームです。人生で初めてプログラムを組んで作成した作品です。</p>
-					<p>使用ツール：Processing</p>
-				</article>
-				<article class="col-6 col-12-xsmall work-item">
-					<a href="images/fulls/04.png" class="image fit thumb"><img src="images/thumbs/04.png" alt="" /></a>
-					<h3>Video Learning Support App</h3>
-					<p>授業内課題。Youtubeの字幕から自然言語処理を用いて頻出単語を解析し、Qiitaの記事を推薦するアプリです。
-						精度が悪かったので動画タイトルの情報も利用しました。</p>
-					<p>使用ツール：<br>Python(Bottle etc...),nltk,YouTubeDataApi,QiitaApi,Bulma</p>
-					<a href="https://github.com/narusei/vls-app" target="_blank">作品はこちらから</a>
-				</article>
-				<article class="col-6 col-12-xsmall work-item">
-					<a href="images/fulls/05.png" class="image fit thumb"><img src="images/thumbs/05.png" alt="" /></a>
-					<h3>ご祝儀メモツール</h3>
-					<p>授業内課題。直近に親戚の結婚式があり、記録ツールがあったら便利かなと思ったため。</p>
-					<p>使用ツール：Java,PostgreSQL</p>
-				</article>
-			</div>
-			<ul class="actions">
-				<li><a href="#" class="button">Full Portfolio</a></li>
-			</ul>
-		</section>
-
-		<!-- Three -->
-		<!-- <section id="three">
+      <!-- Three -->
+      <!-- <section id="three">
 			<h2>Get In Touch</h2>
 			<p>Accumsan pellentesque commodo blandit enim arcu non at amet id arcu magna. Accumsan orci faucibus id eu
 				lorem semper nunc nisi lorem vulputate lorem neque lorem ipsum dolor.</p>
@@ -170,8 +265,8 @@
 			</div>
 		</section> -->
 
-		<!-- Four -->
-		<!--
+      <!-- Four -->
+      <!--
 					<section id="four">
 						<h2>Elements</h2>
 
@@ -486,36 +581,40 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 						</section>
 
 					</section>
-				-->
+				--></div>
 
-	</div>
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="inner">
+        <ul class="icons">
+          <li>
+            <a
+              href="https://twitter.com/narusei_dev"
+              class="icon brands fa-twitter"
+              ><span class="label">Twitter</span></a
+            >
+          </li>
+          <li>
+            <a href="https://github.com/narusei" class="icon brands fa-github"
+              ><span class="label">Github</span></a
+            >
+          </li>
+          <!-- <li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li> -->
+          <!-- <li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li> -->
+        </ul>
+        <ul class="copyright">
+          <li>&copy; Narusei</li>
+          <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+        </ul>
+      </div>
+    </footer>
 
-	<!-- Footer -->
-	<footer id="footer">
-		<div class="inner">
-			<ul class="icons">
-				<li><a href="https://twitter.com/narusei_dev" class="icon brands fa-twitter"><span
-							class="label">Twitter</span></a></li>
-				<li><a href="https://github.com/narusei" class="icon brands fa-github"><span
-							class="label">Github</span></a></li>
-				<!-- <li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li> -->
-				<!-- <li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li> -->
-			</ul>
-			<ul class="copyright">
-				<li>&copy; Narusei</li>
-				<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-			</ul>
-		</div>
-	</footer>
-
-	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/jquery.poptrox.min.js"></script>
-	<script src="assets/js/browser.min.js"></script>
-	<script src="assets/js/breakpoints.min.js"></script>
-	<script src="assets/js/util.js"></script>
-	<script src="assets/js/main.js"></script>
-
-</body>
-
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.poptrox.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
 </html>
