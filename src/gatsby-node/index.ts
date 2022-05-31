@@ -22,7 +22,9 @@ export const createPages: GatsbyNode['createPages'] = async ({
         allMarkdownRemark(
           sort: { fields: [frontmatter___date], order: ASC }
           limit: 1000
-          filter: { frontmatter: { contentType: { eq: "blog" } } }
+          filter: {
+            frontmatter: { contentType: { eq: "blog" }, draft: { eq: false } }
+          }
         ) {
           nodes {
             id
@@ -43,7 +45,9 @@ export const createPages: GatsbyNode['createPages'] = async ({
         allMarkdownRemark(
           sort: { fields: [frontmatter___date], order: ASC }
           limit: 1000
-          filter: { frontmatter: { contentType: { eq: "work" } } }
+          filter: {
+            frontmatter: { contentType: { eq: "work" }, draft: { eq: false } }
+          }
         ) {
           nodes {
             id
@@ -169,6 +173,7 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
         thumbnail: File @fileByRelativePath
         thumbnailAlt: String
         link: String
+        draft: Boolean
       }
 
       type Fields {

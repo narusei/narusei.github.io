@@ -7,6 +7,7 @@ tags: ['tag1', 'tag2']
 thumbnail: './thumbnail_tatekae.png'
 thumbnailAlt: 'Tatekaeのトップページ'
 link: 'https://tatekae-9956a.web.app/'
+draft: false
 ---
 
 Tatekae は”グループでの旅行”などのイベントなどで、メンバー間で起こる「立て替え」をメモするだけで、自動精算してくれる Web サービスです

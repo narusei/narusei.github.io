@@ -6,6 +6,7 @@ contentType: 'work'
 tags: ['tag1', 'tag2']
 thumbnail: './thumbnail_cuetube.png'
 thumbnailAlt: 'Cuetubeの動画再生ページ'
+draft: false
 ---
 
 CuetubeはGoogle formからYoutubeの動画IDを送信すると自動でループ再生されるツールです。

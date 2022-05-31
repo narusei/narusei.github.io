@@ -7,6 +7,7 @@ tags: ['tag1', 'tag2']
 thumbnail: './thumbnail_leteto.png'
 thumbnailAlt: 'Letetoのロゴ'
 # link: 'http://leteto.herokuapp.com/'
+draft: false
 ---
 
 Leteto は特定コミュニティ内での勉強会などを促進を目指したプロダクトです。
