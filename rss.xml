@@ -1,4 +1,324 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Narusei Portal Site RSS Feed]]></title><description><![CDATA[制作物の紹介・知見共有・自身の考えなど、身の回りに起こったことをアウトプットする製作者のポータルサイトです。]]></description><link>https://narusei.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 23 Apr 2022 02:27:26 GMT</lastBuildDate><item><title><![CDATA[個人サイトを作りました！]]></title><description><![CDATA[はじめに はじめまして！執筆当時は都内で大学院生をやっていますnaruseiと申し上げます。 主にWeb技術を使ってツールやサービスをちまちまと作ったりしています。また、IoT…]]></description><link>https://narusei.github.io/blog/hello-narusite/</link><guid isPermaLink="false">https://narusei.github.io/blog/hello-narusite/</guid><pubDate>Fri, 01 Apr 2022 08:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;はじめに&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Narusei Portal Site RSS Feed]]></title><description><![CDATA[制作物の紹介・知見共有・自身の考えなど、身の回りに起こったことをアウトプットする製作者のポータルサイトです。]]></description><link>https://narusei.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Fri, 23 Dec 2022 07:03:13 GMT</lastBuildDate><item><title><![CDATA[Bluetoothを用いてデータをMongoDBへロギングするCLIツールを作りました]]></title><description><![CDATA[この記事はTDU CPSLab Advent Calendar 2022 - Adventarの10日目の記事です 前の記事はこちらから。次の記事はこちらから。 はじめに こんにちは。都内で大学生をやっているなるせいです。 今回はBluetoothを用いてデータをMongoDB…]]></description><link>https://narusei.github.io/blog/blegger/</link><guid isPermaLink="false">https://narusei.github.io/blog/blegger/</guid><pubDate>Fri, 23 Dec 2022 16:00:00 GMT</pubDate><content:encoded>&lt;p&gt;この記事は&lt;a href=&quot;https://adventar.org/calendars/7417&quot;&gt;TDU CPSLab Advent Calendar 2022 - Adventar&lt;/a&gt;の10日目の記事です&lt;/p&gt;
+&lt;p&gt;前の記事は&lt;a href=&quot;&quot;&gt;こちら&lt;/a&gt;から。次の記事は&lt;a href=&quot;&quot;&gt;こちら&lt;/a&gt;から。&lt;/p&gt;
+&lt;h1&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;こんにちは。都内で大学生をやっているなるせいです。&lt;/p&gt;
+&lt;p&gt;今回はBluetoothを用いてデータをMongoDBへロギングするCLIツールを作りましたので、記事にまとめておこうと思います。&lt;br&gt;
+リポジトリは&lt;a href=&quot;https://github.com/narusei/blegger&quot;&gt;こちら&lt;/a&gt;です。&lt;/p&gt;
+&lt;h1&gt;目次&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;開発環境&lt;/li&gt;
+&lt;li&gt;どんなことができるの？&lt;/li&gt;
+&lt;li&gt;実装内容
+&lt;ul&gt;
+&lt;li&gt;Bluetoothデバイスの取得&lt;/li&gt;
+&lt;li&gt;MongoDBにアクセスする実装&lt;/li&gt;
+&lt;li&gt;CLIツールの実装&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;確認できていないこと&lt;/li&gt;
+&lt;li&gt;おわりに&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;開発環境&lt;/h1&gt;
+&lt;p&gt;開発にはNode.jsにTypescriptを導入して作りました。&lt;br&gt;
+使用したモジュールは以下の通りです。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;@abandonware/noble
+&lt;ul&gt;
+&lt;li&gt;Node.js内にてBluetoothを扱うためのモジュールです&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;mongodb
+&lt;ul&gt;
+&lt;li&gt;MongoDBサーバにアクセスするために使います&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;yargs
+&lt;ul&gt;
+&lt;li&gt;CLIツール化するために使うモジュールです&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;加えてMongoDBサーバをDockerを用いて立てています&lt;/p&gt;
+&lt;h1&gt;どんなことができるの？&lt;/h1&gt;
+&lt;p&gt;Bluetoothを扱えるマイコンにてnotifyされた際の情報を受信してMongoDBの方に格納します。&lt;br&gt;
+データはStringで送信します。複数送信したい場合は以下のように送信します。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;data = data1 + &quot;,&quot; + data2 + &quot;,&quot; + data3&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;デバイス側の準備が整ったらCLIを起動します。&lt;br&gt;
+CLIの扱い方は以下の通りです。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ターミナルで本リポジトリ配下を開いてください
+&lt;ul&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;/blegger&lt;/code&gt;に。以下ターミナル 1 と呼称します&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ターミナルで本リポジトリ配下の mongo フォルダを開いてください
+&lt;ul&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;/blegger/mongo&lt;/code&gt;に。以下ターミナル 2 と呼称します&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ターミナル 1 で&lt;code class=&quot;language-text&quot;&gt;npm install&lt;/code&gt;します&lt;/li&gt;
+&lt;li&gt;ターミナル 2 で&lt;code class=&quot;language-text&quot;&gt;docker compose up&lt;/code&gt;します
+&lt;ul&gt;
+&lt;li&gt;古いバージョンを使っている方は&lt;code class=&quot;language-text&quot;&gt;docker-compose up&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ターミナル 1 で以下のフォーマットに従い実行します
+&lt;ul&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;npm start -- --name=&quot;YOUR_DEVICE_LOCAL_NAME&quot; --service=&quot;YOUR_SERVICE_UUID&quot; --characteristics=&quot;YOUR_CHARACTERISTIC_UUID1&quot; &quot;YOUR_CHARACTERISTIC_UUID2&quot; --columns=&quot;DATABASE_COLUMN1&quot; &quot;DATABASE_COLUMN2&quot;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;オプションは以下のようになっています。&lt;br&gt;
+&lt;code class=&quot;language-text&quot;&gt;npm start -- --help&lt;/code&gt;で見ることができるヘルプと同じ内容です。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;name オプション
+&lt;ul&gt;
+&lt;li&gt;name オプションは作成した BLE デバイスのローカルネームを指します。デバイスの識別に使っています。&lt;/li&gt;
+&lt;li&gt;必須オプションです。String です。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;service オプション
+&lt;ul&gt;
+&lt;li&gt;service オプションはサービスの UUID を指定します。&lt;/li&gt;
+&lt;li&gt;必須オプションです。String です。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;characteristics オプション
+&lt;ul&gt;
+&lt;li&gt;characteristics はキャラクタリスティックの UUID を指定します。&lt;/li&gt;
+&lt;li&gt;必須オプションです。Array&amp;#x3C;String&gt;です。配列で指定できます。columns オプションと指定した数が一致していなければなりません。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;columns オプション
+&lt;ul&gt;
+&lt;li&gt;columns オプションはデータベースに保存する際のコレクション名です。ひとつのキャラクタリスティックにつき、ひとつのコレクションの生成をイメージしています。&lt;/li&gt;
+&lt;li&gt;必須オプションです。Array&amp;#x3C;String&gt;です。配列で指定できます。characteristics オプションと指定した数が一致していなければなりません。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;正常に動作した場合は mongoDB Compassなどからデータを確認できるはずです&lt;/p&gt;
+&lt;h1&gt;実装内容&lt;/h1&gt;
+&lt;p&gt;本章では各実装の簡単な説明をしていきます。&lt;br&gt;
+全体のコードは&lt;a href=&quot;https://github.com/narusei/blegger&quot;&gt;リポジトリ&lt;/a&gt;をご覧ください。&lt;/p&gt;
+&lt;h2&gt;Bluetoothデバイスの取得&lt;/h2&gt;
+&lt;p&gt;まずBluetoothを用いてNotifyしているデバイスを探します。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;noble.on(&apos;stateChange&apos;, async (state) =&gt; {
+  if (state === &apos;poweredOn&apos;) {
+    await noble.startScanningAsync()
+  } else {
+    await noble.stopScanningAsync()
+  }
+})&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Scanを開始するには&lt;code class=&quot;language-text&quot;&gt;startScanningAsync()&lt;/code&gt;を用いればいいんですが、&lt;br&gt;
+その前にnobleが実装しているstateがpowerOnになっているかをチェックする必要があります。&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;noble.on(&apos;stateChange&apos;, callback(state))&lt;/code&gt;を用いることによって、&lt;br&gt;
+stateが変化した際にcallbackされる形になります。&lt;/p&gt;
+&lt;p&gt;この時のstateがpowerOnだった場合にScanを開始しています。&lt;/p&gt;
+&lt;p&gt;ちなみに&lt;code class=&quot;language-text&quot;&gt;startScanning()&lt;/code&gt;もありますがasync/awaitで書きたかったのでAsyncの方を使っています。&lt;/p&gt;
+&lt;p&gt;次にdeviceを取得する処理を行います。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;noble.on(&apos;discover&apos;, async (peripheral: noble.Peripheral) =&gt; {
+  console.log(`${peripheral.advertisement.localName}`)
+  if (peripheral.advertisement.localName == localName) {
+    console.log(&apos;Find &apos; + peripheral.advertisement.localName + &apos;!&apos;)
+  }
+})&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;通常は上記のような形でdiscoverというイベントを監視して、ヒットしていったdeviceのローカルネームを見比べて該当するdeviceを引っ掛けるといった形になります。しかし私としてはこの中にドンドコ処理を書いていくのはあまり良くないかなと感じたので、Promiseで包んで非同期処理で取り出せるようにしました。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;const discoveryHandler = new Promise&amp;lt;noble.Peripheral | undefined&gt;((resolve, _reject) =&gt; {
+  console.log(&apos;Start Scanning...&apos;)
+  noble.on(&apos;discover&apos;, async (peripheral: noble.Peripheral) =&gt; {
+    console.log(`${peripheral.advertisement.localName}`)
+    if (peripheral.advertisement.localName == localName) {
+      console.log(&apos;Find &apos; + peripheral.advertisement.localName + &apos;!&apos;)
+      resolve(peripheral)
+    }
+  })
+})&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;この関数をawaitしてnoble.Peripheralを取得するイメージになります。&lt;/p&gt;
+&lt;p&gt;ただ一方で、見つからないときには恐らく永遠と探し続けるのではないかと思いました。そこでtimeoutを定義する関数を作成して、Promise.raceを用いてどっちかが解決するのを待つという形を取ることにしました。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;const timeoutHandler = new Promise&amp;lt;noble.Peripheral | undefined&gt;((resolve, _reject) =&gt; {
+  setTimeout(() =&gt; {
+    resolve(undefined)
+  }, 30000)
+})&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;const device = await Promise.race([discoveryHandler, timeoutHandler])&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;deviceが見つかったらListenerを全て削除します&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;noble.removeAllListeners()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以上の実装を組み合わせたdeviceを取得する関数が以下の通りになります。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;const waitDevice = async (localName: string) =&gt; {
+  console.log(&apos;Start Scan &amp;amp; Get Target Device&apos;)
+  noble.on(&apos;stateChange&apos;, async (state) =&gt; {
+    if (state === &apos;poweredOn&apos;) {
+      await noble.startScanningAsync()
+    } else {
+      await noble.stopScanningAsync()
+    }
+  })
+
+  const discoveryHandler = new Promise&amp;lt;noble.Peripheral | undefined&gt;((resolve, _reject) =&gt; {
+    console.log(&apos;Start Scanning...&apos;)
+    noble.on(&apos;discover&apos;, async (peripheral: noble.Peripheral) =&gt; {
+      console.log(`${peripheral.advertisement.localName}`)
+      if (peripheral.advertisement.localName == localName) {
+        console.log(&apos;Find &apos; + peripheral.advertisement.localName + &apos;!&apos;)
+        resolve(peripheral)
+      }
+    })
+  })
+
+  const timeoutHandler = new Promise&amp;lt;noble.Peripheral | undefined&gt;((resolve, _reject) =&gt; {
+    setTimeout(() =&gt; {
+      resolve(undefined)
+    }, 30000)
+  })
+
+  try {
+    const device = await Promise.race([discoveryHandler, timeoutHandler])
+
+    noble.removeAllListeners()
+
+    if (device) {
+      return device
+    } else {
+      throw new Error(&apos;Device not Found&apos;)
+    }
+  } catch (e) {
+    throw new Error(&apos;Timeout&apos;)
+  }
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;MongoDBにアクセスする実装&lt;/h2&gt;
+&lt;p&gt;次にmongoDBにアクセスする関数を用意します。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;const connectMongo = async () =&gt; {
+  try {
+    await client.connect()
+    await client.db(&apos;admin&apos;).command({ ping: 1 })
+    console.log(&apos;Connected successfully to server&apos;)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const postMongo = async (colName: string, data: mongoDB.Document) =&gt; {
+  try {
+    const dbSensing = await client.db(&apos;sensing&apos;)
+    const colSensing = dbSensing.collection(colName)
+    const result = await colSensing.insertOne(data)
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;CLIツールの実装&lt;/h2&gt;
+&lt;p&gt;ここまで実装を終えたら準備は整いました。&lt;br&gt;
+あとはyargsを使ってCLIツール化していきます。&lt;/p&gt;
+&lt;p&gt;まずcliで受け入れるコマンドの定義をしていきます。&lt;br&gt;
+前節で述べたオプションを指定していきます。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;const argv = await yargs
+    .option(&apos;name&apos;, {
+      alias: &apos;nm&apos;,
+      description: &apos;ロギングを行うデバイスのLocalNameを指定してください&apos;,
+      demandOption: true,
+      type: &apos;string&apos;,
+    })
+    .option(&apos;service&apos;, {
+      alias: &apos;ser&apos;,
+      description: &apos;ロギングを行いたいServiceのUUIDを指定してください&apos;,
+      demandOption: true,
+      type: &apos;string&apos;,
+    })
+    .option(&apos;characteristics&apos;, {
+      alias: &apos;char&apos;,
+      description: &apos;ロギングを行いたいCharacteristicのUUIDを指定してください&apos;,
+      demandOption: true,
+      type: &apos;array&apos;,
+    })
+    .option(&apos;columns&apos;, {
+      alias: &apos;col&apos;,
+      description: &apos;データのコレクション名を書いてください&apos;,
+      demandOption: true,
+      type: &apos;array&apos;,
+    })
+    .help().argv&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以上のような感じで受け入れオプションを設定します。&lt;br&gt;
+以降、&lt;code class=&quot;language-text&quot;&gt;argv.name&lt;/code&gt;といった形でユーザが入力した値を取得することができます。&lt;/p&gt;
+&lt;p&gt;それでは入力値を変数に格納していきます。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;const localName = argv.name ? argv.name : &apos;&apos;
+const serviceUUIDs = argv.service ? [argv.service] : []
+const characteristicUUIDs: string[] = argv.characteristics.map((value) =&gt; {
+  return value.toString()
+})
+const columns: string[] = argv.columns.map((value) =&gt; {
+  return value.toString()
+})&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;また、characteristicの数はcolumnsの数と同じだけ存在する必要があります。&lt;br&gt;
+columnsはDBに保管するときのデータの種類の数に対応しており、&lt;br&gt;
+それぞれのcharactristicが各データに対応しているからです。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;if (characteristicUUIDs.length != columns.length) {
+  throw new Error(&apos;Characteristic and number of columns do not match&apos;)
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;入力されたlocalNameと先ほど定義したwaitDeviceを使ってデバイスを取ってきます&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;const device = await waitDevice(localName)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;デバイスを取得できたらservice→characteristicと取得してsubscribeを行います。&lt;br&gt;
+これでデバイスからデータを受信できるようになりました。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;// deviceと接続
+await device.connectAsync()
+
+// serviceを取得
+const service = (await device.discoverServicesAsync(serviceUUIDs))[0]
+
+// characteristicsを取得
+const characteristics = await service.discoverCharacteristicsAsync(characteristicUUIDs)
+
+// subscribeを開始
+Promise.all(
+  characteristics.map((characteristic) =&gt; {
+    characteristic.subscribeAsync()
+  })
+)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;続いてmongoDBへの格納をしていきます。&lt;br&gt;
+やり方は色々あると思いますが今回は以下のような実装をしました&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;const colchar = Object.fromEntries(columns.map((col, index) =&gt; [col, characteristics[index]]))
+
+await connectMongo()
+
+for (const col in colchar) {
+  colchar[col].on(&apos;data&apos;, async (data) =&gt; {
+    const receivedData = data.toString()
+    console.log(receivedData)
+    const postData = { ...receivedData.split(&apos;,&apos;) }
+    await postMongo(col, postData)
+  })
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;まずcharacteristicsの配列だったものをcolumnsをkeyとしたObjectに変換します。&lt;br&gt;
+これでforループを回しながらcolumnsの値とcharacteristicsの値にアクセスすることができます。&lt;br&gt;
+その後、mongoDBにアクセスしたのちにforループでデータを格納していきます。&lt;/p&gt;
+&lt;p&gt;最後にctl+Cで終了する前にデバイスやmongoDBとの接続を切る処理を挟み込んで終了です&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;process.on(&apos;SIGINT&apos;, async () =&gt; {
+  await client.close()
+  console.log(&apos;Mongo Client Close&apos;)
+  device.disconnect()
+  console.log(&apos;BLE Device Disconnected&apos;)
+  process.exit(0)
+})&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;各実装の紹介は以上です。&lt;br&gt;
+全体のコードは&lt;a href=&quot;https://github.com/narusei/blegger&quot;&gt;リポジトリ&lt;/a&gt;をご覧ください。&lt;/p&gt;
+&lt;h1&gt;確認できていないこと&lt;/h1&gt;
+&lt;p&gt;本ツールは以下の点が確認できていないです&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;どのくらいのレートで送信することができるのかの検証をしていないです
+&lt;ul&gt;
+&lt;li&gt;デバイス側で delay をかけないで送った場合にデータが欠落する恐れがあります&lt;/li&gt;
+&lt;li&gt;100msくらいは取れました&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ロガー側のデータベース保存処理を逐次的に動作させているためパフォーマンス的に良くない可能性が高いです
+&lt;ul&gt;
+&lt;li&gt;バッファに貯めて一括保存などの処理を挟むべきだと考えています&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;せっかく docker 使っているのに node.js 環境が必要な状態は改善したいなと感じています。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;おわりに&lt;/h1&gt;
+&lt;p&gt;ケーブルをマイコンに繋げてシリアルモニタに表示されているものをコピペするという対応でも問題ないものはいいのですが、ケーブルレスでもっと色々な行動に対する加速度情報をロギングしたいといった需要があったため本CLIを作りました。もし同じような状況になった人とかいましたら是非ご活用くだされば嬉しいです。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[個人サイトを作りました！]]></title><description><![CDATA[はじめに はじめまして！執筆当時は都内で大学院生をやっていますnaruseiと申し上げます。 主にWeb技術を使ってツールやサービスをちまちまと作ったりしています。また、IoT…]]></description><link>https://narusei.github.io/blog/hello-narusite/</link><guid isPermaLink="false">https://narusei.github.io/blog/hello-narusite/</guid><pubDate>Fri, 01 Apr 2022 08:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;はじめまして！執筆当時は都内で大学院生をやっていますnaruseiと申し上げます。&lt;/p&gt;
 &lt;p&gt;主にWeb技術を使ってツールやサービスをちまちまと作ったりしています。また、IoTを絡めた実空間の情報を活用した制作物にも興味を持って取り組んでいます。&lt;/p&gt;
 &lt;p&gt;したがって、主要な技術スタックとしましては&lt;/p&gt;
